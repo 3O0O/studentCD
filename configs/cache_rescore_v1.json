@@ -1,0 +1,50 @@
+{
+  "schema_version": "student-sim-cd.cached-experiment.protocol.v1",
+  "protocol": "cached-python-fence-v1",
+  "frozen_at": "2026-10-02T02:50:45+08:00",
+  "stage": "development_set_protocol_correction_not_confirmatory_test",
+  "source_run": "outputs/progfeed-matched-dev-qwen25-4090-01-20261001/inference",
+  "source_experiment_manifest_sha256": "6508cba41058e0493cffd238b4e4d7bc256d88e0d7a3c3bc78eae19d846c9de3",
+  "source_inference_manifest_sha256": "75ea41d2bbaac9f832439d8dee6bee9cc2b5ca6b3301c8b82b7cfda46b9abf64",
+  "source_candidates_sha256": "bdf4197071fbb11f04ed5454f7133cb0ecb680e3aae84e47d0c488fa7da2daa6",
+  "source_scores_sha256": "7960b456977789d05ed4e6f1c90a5b647cf9b339b69f10896be529f5cb8c6d91",
+  "labels_sha256": "daebdda5c84006df5278280cc1581da71d4d47692e20384a58c75ed45d350636",
+  "expected_samples": 70,
+  "expected_students": 17,
+  "new_generation": false,
+  "extraction": {
+    "only_unwrap": "entire response is one outer python or py fence, lower case, no nested fence",
+    "line_endings": "LF or CRLF; preserve all payload bytes including final newline",
+    "otherwise": "retain exact raw text and record reason; no strip, repair, AST exclusion or label-based choice",
+    "copy_current": "exact original input; never unwrap",
+    "eligibility": "preserve original EOS eligibility; canonical special-token and context checks must pass"
+  },
+  "deduplication": "exact UTF-8 SHA256 per sample with every raw attempt and old-to-new provenance retained",
+  "sequence_protocol": "canonical code tokens + exactly one tokenizer EOS; sum logp; no length normalization",
+  "inference": {
+    "num_generations": 4,
+    "max_new_tokens": 2048,
+    "max_context_tokens": 16384,
+    "temperature": 0.8,
+    "top_p": 0.95,
+    "seed": 20260929,
+    "dtype": "bfloat16",
+    "fence_policy": "unwrap-single"
+  },
+  "fixed_method_parameters": {
+    "base": {"alpha": 0, "beta": 0},
+    "history_d0": {"alpha": 1, "beta": 0},
+    "cd": {"alpha": 1, "beta": 1},
+    "b": {"alpha": 0, "beta": 1}
+  },
+  "methods": ["base", "history_d0", "cd", "b", "copy", "greedy"],
+  "greedy": "original attempt 0 under condition 11, extracted by the same protocol; never relabel base as greedy",
+  "selection": "argmax; ties use lexicographically smallest candidate_id",
+  "primary_metric": "equal-student macro edit_location_f1",
+  "primary_comparison": ["b", "base"],
+  "comparisons": [["b", "base"], ["cd", "base"], ["history_d0", "base"], ["b", "copy"], ["cd", "history_d0"], ["base", "greedy"]],
+  "bootstrap": {"unit": "student", "paired": true, "repetitions": 2000, "seed": 20260929},
+  "secondary_diagnostics": ["edit_operation_f1", "predicted_changed", "predicted_edit_size", "edit_size_absolute_error", "exact_next_code", "candidate_coverage", "duplicate_and_extraction_reasons"],
+  "limitations": ["17 development students; not final effectiveness evidence", "No student or judge execution; no actual correctness or A/q result", "No test-set tuning or source-result overwrite", "Intervals are descriptive uncertainty; no multiple-comparison significance claim"],
+  "night_resource_authorization": {"hosts": ["4090-01", "4090-02"], "max_gpu_count": 1, "max_cpu_threads": 4, "max_total_gpu_wall_seconds": 14400, "stop_by": "2026-10-02T08:30:00+08:00", "requires_live_idle_and_lab_rule_check": true, "budget_scope": "one aggregate budget across authorized hosts; switching nodes cannot reset it"}
+}

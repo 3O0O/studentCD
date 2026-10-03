@@ -1,0 +1,145 @@
+{
+  "schema_version": "student-sim-cd.a-static.protocol.v1",
+  "protocol": "a-static-change-v1",
+  "stage": "static behavior-group prototype, not executable progress A",
+  "expected_train_samples": 4299,
+  "expected_train_students": 172,
+  "expected_eligible_samples": 737,
+  "expected_eligible_students": 140,
+  "expected_history_samples": 519,
+  "expected_dev_samples": 70,
+  "expected_dev_students": 17,
+  "train_inputs_sha256": "58beb677a12c41e4cfd8f10e4471aaf0052067b2a3383a583d25c8a170cd54fc",
+  "train_labels_sha256": "6e2e8b687612a0acae8718ee66aa2e628c6d09becdd965d3ad5e1cd6d9f5429a",
+  "source_audit_sha256": "531502ca3b2cb98a308e9bc3d2d8efd35f2ab761d481fd86095047e783832db5",
+  "source_inventory_fingerprint_sha256": "28790ea549c7544d99568cf29eb7badf70eb82a9a8063fcbeb11aa0a1fd1a4af",
+  "splits_sha256": "4307f68750324fdc2d345b9432f2e4107d6c674ca643d9af0165ed8020b42948",
+  "dev_inputs_sha256": "8099ef796fec7350cf9afe081e2c2946054b9b73bd34023ed7e3f8a7440277c3",
+  "dev_labels_sha256": "daebdda5c84006df5278280cc1581da71d4d47692e20384a58c75ed45d350636",
+  "scope_sha256": "8711f692b740238b9c2bc12b11a4dc15053468305a5769667db86f439cde6914",
+  "eligibility_mode": "frozen_source_inventory_current_submission_only",
+  "eligibility": "five declared lab/file pairs, nonempty current actual feedback and problem, exactly one declared current Python file in original audited readable-source inventory; no target filter",
+  "eligibility_limitation": "Server has prepared data only. Reuses frozen original readable-file inventory, not a new physical raw-directory check; unrecorded nested companion files are not inspected.",
+  "grouping": "unchanged iff candidate text exactly equals current text; all other candidates changed, including formatting changes",
+  "q_model": {
+    "primary": "feedback_numeric",
+    "folds": 5,
+    "seed": 20261003,
+    "l2": 1.0,
+    "selection": "fixed_not_selected_by_dev_or_oof"
+  },
+  "q_primary_metric": "equal-student macro binary log loss",
+  "q_secondary_metrics": [
+    "binary Brier",
+    "five-bin reliability with student weights/counts",
+    "pooled AUC with two-class coverage",
+    "fixed-0.5 confusion and balanced accuracy",
+    "false edit and missed edit"
+  ],
+  "q_feature_boundary": "Five prespecified controls: overall frequency, lab/file frequency, current numeric logistic, past-history numeric logistic, current-feedback-size numeric logistic. Task identity is used only by task frequency; numeric logistic models do not include task one-hot features. No student ID, future text/results/time, embeddings or semantic feedback understanding claim.",
+  "q_comparison": "Each prespecified control versus overall and task frequency on identical student-held-out training predictions; logloss/Brier differences and descriptive student-paired bootstrap, no model selection",
+  "q_temporal_limitation": "Offline training-student split, not globally chronological online forecasting; every individual query feature is strictly current or past",
+  "fixed_method_parameters": {
+    "base": {
+      "alpha": 0,
+      "beta": 0
+    },
+    "cd": {
+      "alpha": 1,
+      "beta": 1
+    },
+    "b": {
+      "alpha": 0,
+      "beta": 1
+    },
+    "history_d0": {
+      "alpha": 1,
+      "beta": 0
+    }
+  },
+  "score_temperature": 1,
+  "q_shared_across_rankers": true,
+  "primary_pool": "balanced12",
+  "primary_comparison": "A+CD minus A+base: equal-student macro expected edit_location_f1 under complete candidate distributions",
+  "behavior_secondary_metrics": [
+    "true-changed observed-group conditional F1 diagnostic",
+    "expected operation F1",
+    "expected edit-size absolute error",
+    "edit-size CRPS",
+    "student-weighted edit-size Wasserstein",
+    "location-event Brier",
+    "false-edit/missed-edit probability",
+    "argmax F1 separately",
+    "oracle and group coverage diagnostic"
+  ],
+  "bootstrap": {
+    "unit": "student",
+    "paired": true,
+    "repetitions": 2000,
+    "seed": 20260929,
+    "interpretation": "seen-dev descriptive"
+  },
+  "dev_selection": false,
+  "test_read": false,
+  "new_generation": false,
+  "new_model_scoring": false,
+  "student_execution": false,
+  "grader_execution": false,
+  "new_downloads": false,
+  "max_cpu_threads": 1,
+  "max_wall_seconds": 7200,
+  "stop_by": "2026-10-03T08:30:00+08:00",
+  "pool_sources": {
+    "balanced12": {
+      "directory": "outputs/candidate-support-dev-4090-02-20261002T073000Z/prepared/pools/balanced12/inference",
+      "manifest_sha256": "9b3b21add20ac4e0e7e115f6ace45edad58e5273c1df836628fb1683f984c6cb",
+      "candidates_sha256": "da49d192301ed0c4030789e7135313cdc6eb98bde6d4ed9cddee8bd5d2601556",
+      "scores_sha256": "8af83a0794926dfb303b67ad8778f97562194b8d878df528f0c5e48fa60b8ebc",
+      "expected_candidates": 861
+    },
+    "11_only12": {
+      "directory": "outputs/candidate-support-dev-4090-02-20261002T073000Z/prepared/pools/11_only12/inference",
+      "manifest_sha256": "3eba21f31b97c3c233e6cd564ed40d19c97588f902ef61bc960f8f0da2beab8f",
+      "candidates_sha256": "e870b7b0927033630218020c12306b502ccc9bf5b5fbb26df18cf0f30615388d",
+      "scores_sha256": "1ac1712cd9017b9c584c3bd903877a590b06756fee265446bd284a6e16c66401",
+      "expected_candidates": 743
+    },
+    "legacy318": {
+      "directory": "outputs/cache-rescore-dev-4090-02-20261001T195804Z/prepared/inference",
+      "manifest_sha256": "6405739224377f7116818005f2eea488458ab93e89cb3030c694277160a5cc7e",
+      "candidates_sha256": "c9c0303b9832c6334aea6fd89fe69dbf321f1ab9b24dc15c71f428fa16530551",
+      "scores_sha256": "0ff4b46807af84bcd203fdedd7b5afec10263a2eb5eb101d6b51431b64a1b90d",
+      "expected_candidates": 318
+    }
+  },
+  "metric_reference_sources": [
+    {
+      "work": "CoderAgent",
+      "url": "https://arxiv.org/pdf/2505.20642#page=6",
+      "actual_metrics": "LLM-judged intent/location ACC, CodeBLEU, next AC AUC; not our diff F1"
+    },
+    {
+      "work": "ParaStudent v3",
+      "url": "https://arxiv.org/pdf/2507.12674v3#page=5",
+      "actual_metrics": "pass-rate/PEP8/LOC/AST Wasserstein and paired MAE; embedding cosine/Top-k; feedback MAE/RMSE and downstream AUC"
+    },
+    {
+      "work": "TIKTOC",
+      "url": "https://arxiv.org/pdf/2410.10829#page=7",
+      "actual_metrics": "test-case AUC/F1/accuracy, CodeBLEU, Dist-1; first-submission task differs"
+    },
+    {
+      "work": "Strictly Proper Scoring Rules",
+      "url": "https://sites.stat.washington.edu/people/raftery/Research/PDF/Gneiting2007jasa.pdf",
+      "role": "log score/Brier/CRPS basis; CRPS is our proposed auxiliary edit-size metric"
+    }
+  ],
+  "go_no_go": "Report q versus train-held-out frequency controls and same-q conditional ranking separately; no dev metric tuning, no novelty/efficacy declaration. Null results do not reject all progress-A mechanisms.",
+  "deferred": [
+    "execution-based progress groups",
+    "validated grader sandbox",
+    "semantic feedback uptake/human annotation",
+    "CodeBLEU/embedding external baselines",
+    "independent test27 model run with prior static exposure disclosure"
+  ]
+}

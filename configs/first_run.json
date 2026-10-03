@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "seed": 20260929,
+  "dataset": "umass-ml4ed/progFeed-dataset-public",
+  "split_unit": "student",
+  "model_id": "Qwen/Qwen2.5-Coder-7B-Instruct",
+  "evaluation_scope": "next_observed_submission",
+  "candidate_pool": "shared_across_methods_no_target_injection",
+  "first_model_cohort": "progfeed-selected-v1/matched/dev: all 70 eligible matched samples; no count cap",
+  "first_model_stage": "development-set engineering and behavior audit; not a final paper comparison",
+  "inference": {
+    "num_generations": 4,
+    "max_new_tokens": 2048,
+    "max_context_tokens": 16384,
+    "temperature": 0.8,
+    "top_p": 0.95,
+    "seed": 20260929,
+    "dtype": "bfloat16",
+    "fence_policy": "preserve"
+  },
+  "length_evidence": {
+    "tokenizer": "official Qwen2.5-Coder-7B-Instruct frozen assets, CPU preflight",
+    "matched_dev_samples": 70,
+    "matched_dev_max_prompt_tokens": 13241,
+    "minimum_context_with_2048_generation_budget": 15289,
+    "history_truncation": false
+  },
+  "fixed_method_parameters": {
+    "base": {"alpha": 0, "beta": 0},
+    "history_d0": {"alpha": 1, "beta": 0},
+    "cd": {"alpha": 1, "beta": 1},
+    "b": {"alpha": 0, "beta": 1}
+  },
+  "judge_status": "not_validated_do_not_execute_student_code",
+  "methods": ["copy", "base", "history_d0", "cd", "b"],
+  "calibrated_methods": ["base_plus_q", "cd_plus_q", "b_plus_q"],
+  "calibrated_methods_require": "validated_candidate_execution_and_feedback_conditioned_q"
+}

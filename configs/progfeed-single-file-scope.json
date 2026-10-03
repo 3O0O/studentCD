@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "description": "Initial text-described single-file tasks, checked against official files.txt, tests and CSV function names. Eligibility uses only the current submission, never the target.",
+  "source_commit": "e020c7c013187dba7b4130991eadc539d115526a",
+  "pairs": [
+    {"lab": "lab02", "source_file": "to_do_list.py"},
+    {"lab": "lab03", "source_file": "triangle_class.py"},
+    {"lab": "lab06", "source_file": "nested_loops.py"},
+    {"lab": "lab07", "source_file": "dictionaries.py"},
+    {"lab": "lab09", "source_file": "files.py"}
+  ],
+  "exclusions": {
+    "lab05": "The assignment requires multiple student files; do not present a single-file prompt as the whole task.",
+    "lab10": "The supplied text descriptions repeat lab09 and do not describe the thermostat assignment.",
+    "remaining_labs": "No semantically verified complete text description has been prepared. This does not mean the assignments are unusable."
+  }
+}

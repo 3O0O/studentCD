@@ -1,0 +1,103 @@
+{
+  "schema_version": "student-sim-cd.history-intervention.protocol.v1",
+  "protocol": "history-interventions-v1",
+  "frozen_at": "2026-10-02T11:08:05.487430+08:00",
+  "stage": "development_history_intervention_diagnostic_not_confirmatory_test",
+  "expected_samples": 70,
+  "expected_students": 17,
+  "expected_candidates": 318,
+  "baseline_run": "outputs/cache-rescore-dev-4090-02-20261001T195804Z",
+  "baseline_release_sha256": "3cb925a67cee5f5cc00790029a7b20caa0d9405de59f506d9a67f907c91d3a53",
+  "baseline_sha256": {
+    "manifest.json": "9bafd1d5b2dd6a8c3da22dce69c128848fcf9a56411bdb935a93d0ca0b2e9328",
+    "SUCCESS": "02046a4c45994631e9a1210dfd6a4d008fda9b0ed9a95b52bdbc475425b8186b",
+    "prepared/inputs.jsonl": "8099ef796fec7350cf9afe081e2c2946054b9b73bd34023ed7e3f8a7440277c3",
+    "prepared/references.jsonl": "3a0c4765f48f2b6b5e9dee167aae8198206cb1ccca96a7fc5658432337f72125",
+    "prepared/inference/manifest.json": "6405739224377f7116818005f2eea488458ab93e89cb3030c694277160a5cc7e",
+    "prepared/inference/candidates.jsonl": "c9c0303b9832c6334aea6fd89fe69dbf321f1ab9b24dc15c71f428fa16530551",
+    "prepared/inference/scores.jsonl": "0ff4b46807af84bcd203fdedd7b5afec10263a2eb5eb101d6b51431b64a1b90d"
+  },
+  "baseline_scoring": "reused_prior_completed_scores; not freshly recomputed this phase",
+  "training_inputs": "data/prepared/progfeed-v2/inputs.train.jsonl",
+  "training_inputs_sha256": "58beb677a12c41e4cfd8f10e4471aaf0052067b2a3383a583d25c8a170cd54fc",
+  "labels_sha256": "daebdda5c84006df5278280cc1581da71d4d47692e20384a58c75ed45d350636",
+  "variants": [
+    "real_history_swapped",
+    "reference_swapped"
+  ],
+  "seeds": [
+    20261002,
+    20261003,
+    20261004
+  ],
+  "seed_interpretation": "assignment tie-breaking; potentially identical assignments; not independent model repetitions",
+  "history_definition": "complete donor input history; donor current state not appended",
+  "matching_rule": "absolute_history_length_then_history_record_count_then_seeded_hash_v1",
+  "donor_constraints": [
+    "train only; different student and split from query",
+    "same lab and source_file",
+    "donor current and every history entry strictly before query current",
+    "exclude original matched donor and original H/H* payloads",
+    "no labels, performance scores, candidate scores or future states used in assignment"
+  ],
+  "history_length": "existing tokenizer encode(canonical_json(history), add_special_tokens=False, truncation=False)",
+  "context": "audit every complete four-condition prompt and every fixed canonical candidate plus one EOS; max context16384; reserve original2048 generation budget despite no generation; no truncation or sample filtering",
+  "new_generation": false,
+  "student_execution": false,
+  "test_set_used": false,
+  "fixed_method_parameters": {
+    "base": {
+      "alpha": 0,
+      "beta": 0
+    },
+    "history_d0": {
+      "alpha": 1,
+      "beta": 0
+    },
+    "cd": {
+      "alpha": 1,
+      "beta": 1
+    },
+    "b": {
+      "alpha": 0,
+      "beta": 1
+    }
+  },
+  "methods": [
+    "base",
+    "history_d0",
+    "cd",
+    "b",
+    "copy"
+  ],
+  "sequence_protocol": "canonical code tokens + exactly one tokenizer EOS; sum logp; no length normalization",
+  "selection": "argmax; ties use lexicographically smallest candidate_id",
+  "primary_metric": "equal-student macro edit_location_f1",
+  "primary_comparison": "(B-base)_baseline - mean_seed(B-base)_real_history_swapped",
+  "secondary_comparison": "(B-base)_baseline - mean_seed(B-base)_reference_swapped",
+  "bootstrap": {
+    "unit": "student",
+    "paired": true,
+    "repetitions": 2000,
+    "seed": 20260929
+  },
+  "data_residency": "complete training inputs and new donor histories stay on server; transfer only numeric scores, code-free selections, aggregate reports and acceptance logs",
+  "night_resource_authorization": {
+    "hosts": [
+      "4090-02"
+    ],
+    "max_gpu_count": 1,
+    "max_cpu_threads": 4,
+    "max_total_gpu_wall_seconds": 14400,
+    "stop_by": "2026-10-02T16:00:00+08:00",
+    "requires_live_idle_and_lab_rule_check": true,
+    "budget_scope": "one aggregate ledger across all variants and retries; no reset"
+  },
+  "limitations": [
+    "17 development students; descriptive intervals only",
+    "Length/task matching does not equate ability, solution stage or semantic correctness",
+    "Source H/H* held fixed except one declared history factor; training donors may be reused",
+    "No new generation, A/q implementation, judge execution or correctness evidence",
+    "No held-out test inference or efficacy/innovation claim"
+  ]
+}
